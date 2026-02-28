@@ -4,17 +4,17 @@
  */
 
 function countDigits(num: number): number {
-    // Edge case: Agar number 0 hai, toh usme 1 hi digit hoga
-    if (num === 0) {
+    // 1. Pehle hi sign aur decimal khatam kar dein
+    const integerPart = Math.abs(Math.trunc(num));
+
+    // 2. Ab check karein ke kya integer hissa zero hai?
+    // (Yeh 0, -0, 0.123, -0.999 sab ko handle kar lega)
+    if (integerPart === 0) {
         return 1;
     }
 
-    // Negative numbers ko positive mein convert karna taaki log10 calculate ho sake
-    // Agar number decimal hai, toh Math.trunc() se sirf integer part lenge
-    const absNum = Math.abs(Math.trunc(num));
-
-    // Log10 logic apply karke digits count karna
-    return Math.floor(Math.log10(absNum)) + 1;
+    // 3. Ab log10 nikalna bilkul safe hai
+    return Math.floor(Math.log10(integerPart)) + 1;
 }
 
 // ==========================================
@@ -22,7 +22,7 @@ function countDigits(num: number): number {
 // ==========================================
 
 console.log(`Digits in 12345: ${countDigits(12345)}`);       // Output: 5
-console.log(`Digits in 0: ${countDigits(0)}`);               // Output: 1
+console.log(`Digits in 0: ${countDigits(-0.1233)}`);               // Output: 1
 console.log(`Digits in -987: ${countDigits(-987)}`);         // Output: 3
 console.log(`Digits in 7: ${countDigits(7)}`);               // Output: 1
 console.log(`Digits in 1000000: ${countDigits(1000000)}`);   // Output: 7
